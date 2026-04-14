@@ -44,18 +44,19 @@
         </div>
 
         <div class="todo-card__status">
-          <span class="status-badge status-badge--in-progress" data-testid="test-todo-status">
+          <span aria-label="Task status: In Progress" class="status-badge status-badge--in-progress"
+            data-testid="test-todo-status">
             In Progress
           </span>
         </div>
       </div>
 
       <!-- Tags -->
-      <div class="todo-card__tags" data-testid="test-todo-tags">
-        <span class="tag" data-testid="test-todo-tag-work">Work</span>
-        <span class="tag" data-testid="test-todo-tag-urgent">Urgent</span>
-        <span class="tag">Quarterly</span>
-      </div>
+      <ul class="todo-card__tags" role="list" data-testid="test-todo-tags">
+        <li class="tag" data-testid="test-todo-tag-work">Work</li>
+        <li class="tag" data-testid="test-todo-tag-urgent">Urgent</li>
+        <li class="tag">Quarterly</li>
+      </ul>
 
       <!-- Actions -->
       <footer class="todo-card__actions">

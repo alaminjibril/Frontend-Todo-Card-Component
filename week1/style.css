@@ -255,6 +255,8 @@ body {
   flex-wrap: wrap;
   gap: 8px;
   margin-bottom: 24px;
+  list-style: none;
+  padding: 0;   
 }
 
 .tag {
