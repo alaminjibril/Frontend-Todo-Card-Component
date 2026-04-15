@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Todo Card Component</title>
+  <title>Advanced Todo Card - Stage 1a</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -21,16 +21,37 @@
 
         <div class="todo-card__title-priority">
           <h2 class="todo-card__title" data-testid="test-todo-title">Complete quarterly reports</h2>
-          <span class="todo-priority todo-priority--high" data-testid="test-todo-priority" aria-label="High priority">
-            <span class="priority-dot"></span>High
+          <span class="todo-priority todo-priority--high" data-testid="test-todo-priority"
+            aria-label="High priority">
+            <span class="priority-dot" data-testid="test-todo-priority-indicator"></span>High
           </span>
         </div>
       </header>
 
-      <!-- Description -->
-      <p class="todo-card__description" data-testid="test-todo-description">
-        Review and finalize Q1 financial reports. Include team feedback and update forecasts.
-      </p>
+      <!-- Overdue Indicator -->
+      <div class="todo-overdue-indicator" data-testid="test-todo-overdue-indicator" style="display: none;">
+         Overdue
+      </div>
+
+      <!-- Description with Expand/Collapse -->
+      <div class="todo-card__description-section">
+        <p class="todo-card__description" data-testid="test-todo-description">
+          Review and finalize Q1 financial reports. Include team feedback and update forecasts.
+        </p>
+        <button class="todo-expand-toggle" data-testid="test-todo-expand-toggle" aria-expanded="false"
+          aria-controls="collapsible-section" style="display: none;">
+          Read more
+        </button>
+      </div>
+
+      <!-- Collapsible Section -->
+      <div class="todo-collapsible-section" id="collapsible-section"
+        data-testid="test-todo-collapsible-section" style="display: none;">
+        <p class="todo-collapsible-content">
+          Additional details: This report includes Q1 performance metrics, budget analysis, team achievements,
+          and recommendations for Q2. Please ensure all data is verified before final submission.
+        </p>
+      </div>
 
       <!-- Meta information -->
       <div class="todo-card__meta">
@@ -43,30 +64,84 @@
           </span>
         </div>
 
-        <div class="todo-card__status">
-          <span aria-label="Task status: In Progress" class="status-badge status-badge--in-progress"
-            data-testid="test-todo-status">
-            In Progress
-          </span>
+        <div class="todo-card__status-control-wrapper">
+          <label for="status-control" class="status-control-label">Status:</label>
+          <select id="status-control" class="todo-status-control" data-testid="test-todo-status-control"
+            aria-label="Task status">
+            <option value="Pending">Pending</option>
+            <option value="In Progress" selected>In Progress</option>
+            <option value="Done">Done</option>
+          </select>
         </div>
+
+        <span class="status-badge status-badge--in-progress" data-testid="test-todo-status">
+          In Progress
+        </span>
       </div>
 
       <!-- Tags -->
-      <ul class="todo-card__tags" role="list" data-testid="test-todo-tags">
-        <li class="tag" data-testid="test-todo-tag-work">Work</li>
-        <li class="tag" data-testid="test-todo-tag-urgent">Urgent</li>
-        <li class="tag">Quarterly</li>
-      </ul>
+      <div class="todo-card__tags" data-testid="test-todo-tags">
+        <span class="tag" data-testid="test-todo-tag-work">Work</span>
+        <span class="tag" data-testid="test-todo-tag-urgent">Urgent</span>
+        <span class="tag">Quarterly</span>
+      </div>
 
-      <!-- Actions -->
-      <footer class="todo-card__actions">
+      <!-- Actions (View Mode) -->
+      <footer class="todo-card__actions todo-card__actions--view" id="actions-view">
         <button class="btn btn--secondary" data-testid="test-todo-edit-button">
-          Edit
+           Edit
         </button>
         <button class="btn btn--danger" data-testid="test-todo-delete-button">
-          Delete
+           Delete
         </button>
       </footer>
+
+      <!-- Edit Form (Hidden by default) -->
+      <div class="todo-card__edit-mode" id="edit-mode" style="display: none;">
+        <form class="todo-edit-form" data-testid="test-todo-edit-form" id="todo-edit-form">
+          <!-- Title Input -->
+          <div class="form-group">
+            <label for="edit-title" class="form-label">Title</label>
+            <input type="text" id="edit-title" class="form-input" data-testid="test-todo-edit-title-input"
+              placeholder="Task title" required />
+          </div>
+
+          <!-- Description Textarea -->
+          <div class="form-group">
+            <label for="edit-description" class="form-label">Description</label>
+            <textarea id="edit-description" class="form-textarea" data-testid="test-todo-edit-description-input"
+              placeholder="Task description" rows="4"></textarea>
+          </div>
+
+          <!-- Priority Select -->
+          <div class="form-group">
+            <label for="edit-priority" class="form-label">Priority</label>
+            <select id="edit-priority" class="form-select" data-testid="test-todo-edit-priority-select"
+              required>
+              <option value="Low">Low</option>
+              <option value="Medium">Medium</option>
+              <option value="High" selected>High</option>
+            </select>
+          </div>
+
+          <!-- Due Date Input -->
+          <div class="form-group">
+            <label for="edit-due-date" class="form-label">Due Date</label>
+            <input type="date" id="edit-due-date" class="form-input"
+              data-testid="test-todo-edit-due-date-input" required />
+          </div>
+
+          <!-- Form Actions -->
+          <div class="form-actions">
+            <button type="submit" class="btn btn--primary" data-testid="test-todo-save-button">
+              Save
+            </button>
+            <button type="button" class="btn btn--secondary" data-testid="test-todo-cancel-button">
+               Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </article>
   </main>
   <script src="script.js"></script>

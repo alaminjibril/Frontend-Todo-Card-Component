@@ -1,191 +1,328 @@
-# Frontend Wizards Stage 0 - Todo Card Component
+# Frontend Wizards Stage 1a - Advanced Todo Card Component
 
-A clean, pixel-perfect, fully responsive todo card component built with vanilla HTML, CSS, and JavaScript. Designed to pass all automated tests while maintaining professional design standards.
+An extended, interactive, stateful todo card component built with vanilla HTML, CSS, and JavaScript. Takes the Stage 0 foundation and adds advanced features including edit mode, status control, expandable descriptions, and overdue indicators.
 
-## Features
+## What's New in Stage 1a
 
-✅ **Pixel-Perfect Design** — Apple-inspired minimalist aesthetic
-✅ **Fully Responsive** — Works beautifully from 320px to 1200px+
-✅ **Interactive Elements** — Checkbox toggle, edit/delete buttons with proper feedback
-✅ **Real-Time Updates** — Time-remaining text updates every 60 seconds
-✅ **Accessible** — Semantic HTML, ARIA labels, keyboard navigation, screen reader support
-✅ **Test-Ready** — All required data-testid attributes included
-✅ **No Dependencies** — Pure HTML, CSS, and vanilla JavaScript
+✨ **Extended from Stage 0** with:
+- ✅ **Edit Mode** — Click Edit to modify task details via form
+- ✅ **Status Control** — Dropdown to change status (Pending, In Progress, Done)
+- ✅ **Expand/Collapse** — Toggle long descriptions
+- ✅ **Overdue Indicator** — Visual warning when task is past due
+- ✅ **Priority Enhancements** — Visual indicators for priority levels
+- ✅ **Synced State** — Checkbox, status dropdown, and status badge stay in sync
+- ✅ **Enhanced Accessibility** — aria-expanded, aria-controls, aria-live
+- ✅ **Form Validation** — All fields validate before saving
 
-## Features Explained
+## Core Features
 
-### Time Remaining
-- Displays human-readable time remaining until the due date
-- Updates every 60 seconds automatically
-- Shows: "Due in X days", "Due tomorrow", "Due today", "Due in X hours", "Overdue by X hours"
-- Target date: March 1, 2026, 6:00 PM UTC
+### 1. Edit Mode
+- Click the **Edit** button to enter edit mode
+- Modal-like form appears with all editable fields
+- Fill in:
+  - **Title** — Task name
+  - **Description** — Task details
+  - **Priority** — Low, Medium, or High
+  - **Due Date** — Date picker (format: YYYY-MM-DD)
+- **Save** — Updates the card with new values
+- **Cancel** — Closes form without saving changes
+- Press **Escape** to quickly exit edit mode
 
-### Checkbox Toggle
-- Click to mark task as complete
-- Title gets strikethrough when checked
-- Status badge changes from "In Progress" to "Done"
-- Visual state changes with the `.is-completed` class
-- Uncheck to revert all changes
+### 2. Status Control
+- **Status Dropdown** — Change task status directly
+- Options: **Pending**, **In Progress**, **Done**
+- Changes automatically sync:
+  - Status badge updates color
+  - Checkbox checks/unchecks
+  - Time remaining updates (shows "Completed" if done)
 
-### Priority Badge
-- Shows task priority level (High, Medium, Low)
-- Color-coded: Red for High, Amber for Medium, Gray for Low
-- Includes a small colored dot indicator
+### 3. Checkbox & Status Sync
+- **Check Checkbox** → Status changes to "Done"
+- **Uncheck Checkbox** → Status changes to "Pending"
+- **Change Status Dropdown** → Checkbox checks/unchecks automatically
+- **Select "Done"** → Card shows completed state (strikethrough, muted colors)
 
-### Status Badge
-- Displays current task status
-- Changes color based on status (In Progress, Done, Pending)
-- Updates when checkbox is toggled
+### 4. Expand/Collapse Descriptions
+- Long descriptions (100+ characters) collapse by default
+- **Read more** button appears for expanded content
+- Click to expand and reveal full description
+- Click **Read less** to collapse
+- Smooth animation
+- Fully keyboard accessible (aria-expanded, aria-controls)
 
-### Tags/Categories
-- Displays task tags as pill-shaped badges
-- Supports Work, Urgent, Quarterly, and custom tags
-- Responsive wrapping on smaller screens
+### 5. Overdue Indicator
+- **Visual warning** appears when due date has passed
+- Card border turns **red**
+- ⚠️ **Overdue** badge shows at top of card
+- Time updates show: "Overdue by X days/hours/minutes"
+- Indicator hides when task is marked Done
 
-### Buttons
-- **Edit Button**: Logs "Edit clicked" to console
-- **Delete Button**: Shows alert dialog "Task deleted"
-- Both buttons are keyboard accessible and have focus states
+### 6. Priority Visual Enhancements
+- **Color-coded priority dot** (colored circle next to priority text)
+- **Background colors:**
+  - High: Red background (#FEE2E2)
+  - Medium: Amber background (#FEF3C7)
+  - Low: Gray background (#F3F4F6)
+- Priority can be changed in edit mode
+
+### 7. Time Remaining Management
+- Updates every **45 seconds** (optimized from 60s)
+- **Granular time display:**
+  - "Due in 2 days"
+  - "Due in 3 hours"
+  - "Due in 45 minutes"
+  - "Due now!"
+  - "Overdue by 1 hour"
+- When task is marked **Done**: Shows "Completed" instead of time
+- Time updates stop for completed tasks
 
 ## File Structure
 
 ```
-frontend-stage0/
-├── index.html          - HTML structure with semantic markup
-├── style.css           - Responsive styling and layout
-├── script.js           - JavaScript functionality
+frontend-stage1a/
+├── index.html          - HTML structure with edit form
+├── style.css           - Advanced responsive styling
+├── script.js           - State management & interactions
 └── README.md           - This file
 ```
 
-## HTML Structure (data-testid values)
+## Data-testid Reference (Complete List)
 
-```html
-<!-- Root card container -->
-<article data-testid="test-todo-card">
-  <!-- Checkbox input (required) -->
-  <input data-testid="test-todo-complete-toggle" />
-  
-  <!-- Title (h2 element) -->
-  <h2 data-testid="test-todo-title">Complete quarterly reports</h2>
-  
-  <!-- Priority badge -->
-  <span data-testid="test-todo-priority">High</span>
-  
-  <!-- Description -->
-  <p data-testid="test-todo-description">...</p>
-  
-  <!-- Due date -->
-  <time data-testid="test-todo-due-date">Due March 1, 2026</time>
-  
-  <!-- Time remaining -->
-  <span data-testid="test-todo-time-remaining">Due in 19 days</span>
-  
-  <!-- Status badge -->
-  <span data-testid="test-todo-status">In Progress</span>
-  
-  <!-- Tags container -->
-  <div data-testid="test-todo-tags">
-    <span data-testid="test-todo-tag-work">Work</span>
-    <span data-testid="test-todo-tag-urgent">Urgent</span>
-  </div>
-  
-  <!-- Action buttons -->
-  <button data-testid="test-todo-edit-button">Edit</button>
-  <button data-testid="test-todo-delete-button">Delete</button>
-</article>
+### Stage 0 Elements (Still Present)
+```
+test-todo-card                    - Root article element
+test-todo-complete-toggle         - Checkbox input
+test-todo-title                   - Task title (h2)
+test-todo-priority                - Priority badge
+test-todo-priority-indicator      - Priority dot
+test-todo-description             - Description text
+test-todo-due-date                - Due date time element
+test-todo-time-remaining          - Time remaining span
+test-todo-status                  - Status badge
+test-todo-tags                    - Tags container
+test-todo-tag-work                - Work tag
+test-todo-tag-urgent              - Urgent tag
+test-todo-edit-button             - Edit button
+test-todo-delete-button           - Delete button
 ```
 
-## Testing the Component
-
-### 1. Checkbox Functionality
+### Stage 1a New Elements
 ```
-Click the checkbox
-Expected: 
-  - Title gets strikethrough
-  - Status changes to "Done" (green badge)
-  - Card gets "is-completed" class
-Click again
-Expected: All changes revert
-```
-
-### 2. Time Remaining
-```
-Open browser console (F12)
-Watch the "Due in X days" text
-Expected:
-  - Shows reasonable value (e.g., "Due in 19 days")
-  - Updates every 60 seconds (or refresh to see change)
-  - Format changes based on time: days → hours → minutes → "Due now!" → overdue
+test-todo-overdue-indicator       - Overdue warning (visible when past due)
+test-todo-expand-toggle           - Expand/Collapse button
+test-todo-collapsible-section     - Hidden description container
+test-todo-status-control          - Status dropdown select
+test-todo-edit-form               - Edit form container
+test-todo-edit-title-input        - Edit title input field
+test-todo-edit-description-input  - Edit description textarea
+test-todo-edit-priority-select    - Edit priority dropdown
+test-todo-edit-due-date-input     - Edit due date input
+test-todo-save-button             - Save button in form
+test-todo-cancel-button           - Cancel button in form
 ```
 
-### 3. Edit Button
-```
-Click the Edit button
-Open browser DevTools Console (F12)
-Expected: "Edit clicked" message appears in console
-```
+## Testing the Features
 
-### 4. Delete Button
+### 1. Edit Mode
 ```
-Click the Delete button
-Expected: Alert dialog appears with "Task deleted" message
-```
-
-### 5. Responsive Design
-```
-Test on mobile (320px): Full width, stacked layout
-Test on tablet (768px): Centered, comfortable spacing
-Test on desktop (1200px): Maximum width respected, centered
-
-Expected: Card looks good and is fully usable at all sizes
+1. Click Edit button
+   Expected: View mode hides, form appears with current values
+2. Change title to "New Task Title"
+3. Change description to "New description text"
+4. Change priority to "Low"
+5. Change due date to a future date
+6. Click Save
+   Expected: Form closes, card displays new values
+7. Click Edit again
+   Expected: Form shows the saved values
+8. Make a change, click Cancel
+   Expected: Changes don't save, form closes
 ```
 
-## CSS Highlights
-
-- **CSS Variables**: Theme colors defined at root level for easy customization
-- **Flexbox Layout**: Responsive, no floats or grid for simplicity
-- **Custom Checkbox**: Styled using CSS, maintains accessibility
-- **Responsive Breakpoints**:
-  - Mobile-first: 320px - 640px
-  - Tablet: 641px - 1024px
-  - Desktop: 1025px and up
-- **Accessibility**: Focus states, color contrast, semantic HTML
-
-## JavaScript Functionality
-
-### Time Calculation Logic
-```javascript
-- Target date: March 1, 2026, 6:00 PM UTC
-- Calculates difference from current time
-- If overdue: Shows "Overdue by X days/hours/minutes"
-- If upcoming:
-  - Less than 1 hour: "Due now!" or "Due in X minutes"
-  - Same day: "Due today"
-  - Next day: "Due tomorrow"
-  - Otherwise: "Due in X days"
+### 2. Status Control
+```
+1. Status is "In Progress" initially
+2. Click status dropdown, select "Done"
+   Expected: 
+   - Checkbox becomes checked
+   - Title gets strikethrough
+   - Status badge turns green
+   - Time shows "Completed"
+3. Change status back to "Pending"
+   Expected:
+   - Checkbox unchecks
+   - Strikethrough removes
+   - Badge turns amber
+   - Time resumes updating
+4. Check checkbox manually
+   Expected: Status dropdown changes to "Done"
 ```
 
-### Checkbox Toggle Logic
-```javascript
-- On check:
-  - Add 'is-completed' class to card
-  - Change status to 'Done'
-  - Update badge class to 'status-badge--done'
-- On uncheck:
-  - Remove 'is-completed' class
-  - Change status back to 'In Progress'
-  - Update badge class to 'status-badge--in-progress'
+### 3. Expand/Collapse
+```
+1. Description is longer than 100 characters
+2. "Read more" button should be visible
+3. Click "Read more"
+   Expected: 
+   - Collapsible section expands smoothly
+   - Button text changes to "Read less"
+   - aria-expanded changes to "true"
+4. Click "Read less"
+   Expected:
+   - Section collapses
+   - Button text back to "Read more"
+   - aria-expanded back to "false"
+```
+
+### 4. Overdue Indicator
+```
+1. Edit task and set due date to a past date (e.g., 2026-01-01)
+2. Save
+   Expected:
+   - Red overdue indicator appears
+   - Card border turns red
+   - Time shows "Overdue by X days"
+3. Mark task as Done
+   Expected:
+   - Overdue indicator hides
+   - Time shows "Completed"
+4. Change status back to Pending
+   Expected:
+   - Overdue indicator shows again
+```
+
+### 5. Keyboard Navigation
+```
+Tab through elements in order:
+1. Checkbox
+2. Status dropdown
+3. Expand toggle (if visible)
+4. Edit button
+5. Delete button
+
+In edit mode:
+1. Tab through form fields
+2. Press Escape → Form closes
+3. Focus returns to Edit button
+```
+
+### 6. Responsive Design
+```
+Mobile (320px):
+- Card full width
+- Form fields stack vertically
+- Buttons full width
+
+Tablet (768px):
+- Card max-width respected
+- Centered on screen
+- Form fields still stacked
+
+Desktop (1024px+):
+- Card max-width 520px
+- Status and priority may align
+- Form actions side-by-side
 ```
 
 ## Accessibility Features
 
-- ✅ **Semantic HTML**: Uses article, h2, time, button, label elements
-- ✅ **ARIA Labels**: aria-label for visual-only elements, aria-live for dynamic content
-- ✅ **Keyboard Navigation**: All interactive elements are keyboard accessible
-- ✅ **Focus Styles**: Visible focus rings on all buttons and checkbox
-- ✅ **Color Contrast**: WCAG AA compliant color ratios
-- ✅ **Screen Readers**: Proper label associations and semantic structure
-- ✅ **Visually Hidden Text**: Descriptions for screen readers only
+- ✅ **Semantic HTML** — article, form, input, textarea, select, button, label, time
+- ✅ **ARIA Attributes:**
+  - aria-expanded on expand toggle
+  - aria-controls linking toggle to section
+  - aria-live="polite" on time-remaining
+  - aria-label on priority indicator
+- ✅ **Form Labels** — All inputs have associated labels
+- ✅ **Keyboard Navigation:**
+  - Tab through all interactive elements
+  - Escape exits edit mode
+  - Enter submits form
+  - Space/Enter activates buttons
+- ✅ **Focus Management:**
+  - Visible focus rings on all focusable elements
+  - Focus returns to Edit button when form closes
+  - Form field focus on edit mode open
+- ✅ **Color Contrast** — WCAG AA compliant
+- ✅ **Screen Readers:**
+  - Proper label associations
+  - Semantic structure
+  - ARIA labels for icon-only elements
+
+## CSS Architecture
+
+### Color System
+```css
+--color-white: #FFFFFF
+--color-text-primary: #1F2937
+--color-text-secondary: #6B7280
+--color-accent: #2563EB
+--color-border: #E5E7EB
+--color-red: #EF4444
+
+Status Colors:
+--color-status-pending: #F59E0B (Amber)
+--color-status-progress: #3B82F6 (Blue)
+--color-status-done: #10B981 (Green)
+
+Priority Colors:
+--color-priority-high: #EF4444 (Red)
+--color-priority-medium: #F59E0B (Amber)
+--color-priority-low: #6B7280 (Gray)
+```
+
+### Responsive Breakpoints
+```
+Mobile: 320px - 640px
+Tablet: 641px - 1024px
+Desktop: 1025px+
+```
+
+### Key Classes
+- `.todo-card` — Root container
+- `.todo-card.is-completed` — Completed state (strikethrough, muted)
+- `.todo-card.is-overdue` — Overdue state (red border)
+- `.todo-edit-form` — Form styling
+- `.todo-collapsible-section.expanded` — Expanded state
+
+## State Management
+
+The card maintains internal state:
+```javascript
+{
+  title: "Task name",
+  description: "Task details",
+  priority: "High",        // "Low", "Medium", or "High"
+  dueDate: "2026-03-01",  // Format: YYYY-MM-DD
+  status: "In Progress",  // "Pending", "In Progress", or "Done"
+  isCompleted: false      // Synced with checkbox and status
+}
+```
+
+All state changes sync across:
+- Form fields
+- Checkbox state
+- Status dropdown
+- Status badge
+- Visual styling
+
+## JavaScript Features
+
+### State Sync Functions
+- `syncCheckboxAndStatus()` — Updates state when checkbox changes
+- `syncStatusAndCheckbox()` — Updates state when dropdown changes
+- `updateStatusVisual()` — Applies CSS classes based on status
+- `updatePriorityVisual()` — Updates priority display
+- `updateTheTime()` — Calculates and displays time remaining
+
+### Edit Mode Functions
+- `enterEditMode()` — Shows form, hides buttons
+- `exitEditMode()` — Hides form, shows buttons
+- `saveChanges()` — Validates and saves form data
+
+### Time Functions
+- `formatTimeRemaining()` — Converts ms difference to readable text
+- Updates every 45 seconds
+- Handles overdue dates correctly
 
 ## Browser Compatibility
 
@@ -197,13 +334,95 @@ Expected: Card looks good and is fully usable at all sizes
 ## Performance
 
 - **No external dependencies** — Pure vanilla HTML/CSS/JS
-- **Minimal DOM manipulation** — Efficient class and innerHTML updates
-- **Lightweight** — index.html ~1KB, style.css ~4KB, script.js ~3KB
-- **Smooth animations** — CSS transitions for visual feedback
+- **Minimal DOM manipulation** — Efficient updates
+- **Lightweight:**
+  - index.html ~2KB
+  - style.css ~8KB
+  - script.js ~6KB
+- **Smooth animations** — CSS transitions and JavaScript timing
+- **Optimized intervals** — Time updates every 45 seconds (not every second)
+
+## Known Limitations
+
+- Edit form is not a true modal (no focus trapping)
+- Can be extended with: localStorage persistence, animations, undo/redo
+- Date picker is browser-native (may vary by browser)
+- No validation for past due dates in form (user can set any date)
+
+## Future Enhancements
+
+- Subtasks/checklist support
+- Due date and time picker (not just date)
+- Recurring tasks
+- Task categories/projects
+- Data persistence (localStorage/backend)
+- Drag and drop reordering
+- Animations on state changes
+- Dark mode support
+- Export as JSON/PDF
+
+## Changes from Stage 0
+
+### Added Features
+- ✨ Full edit mode with form
+- ✨ Status dropdown control
+- ✨ Expand/collapse for descriptions
+- ✨ Overdue indicator
+- ✨ Enhanced state management
+- ✨ Better sync between elements
+
+### Improved Accessibility
+- Improved ARIA attributes
+- Better keyboard navigation
+- Form labels and validation
+- Focus management
+
+### Enhanced Styling
+- More interactive visual states
+- Form styling
+- Smooth transitions
+- Better responsive design
+
+### Better State Management
+- Centralized state object
+- Sync functions for all interactions
+- Proper cleanup on mode changes
+
+## Testing Checklist
+
+Before submission:
+
+- [ ] Edit form appears/disappears correctly
+- [ ] Save updates all card values
+- [ ] Cancel closes form without saving
+- [ ] Status dropdown syncs with checkbox
+- [ ] Checkbox syncs with status dropdown
+- [ ] Expand/collapse works smoothly
+- [ ] Overdue indicator shows/hides correctly
+- [ ] Time updates every 45 seconds
+- [ ] All focus rings visible
+- [ ] All buttons keyboard accessible
+- [ ] Form fields keyboard accessible
+- [ ] Escape key exits edit mode
+- [ ] Tab order is logical
+- [ ] Mobile layout is responsive
+- [ ] Tablet layout is responsive
+- [ ] Desktop layout is responsive
+- [ ] No console errors
+- [ ] All data-testid attributes present
+
+## Quick Start
+
+1. **Open in browser:** Double-click `index.html`
+2. **Test edit mode:** Click Edit, change values, Save
+3. **Test status:** Change status dropdown or check checkbox
+4. **Test expand:** Click "Read more" if visible
+5. **Test overdue:** Edit to past date and check indicator
+6. **Test responsive:** Resize browser window
 
 ## Author
 
-Created for Frontend Wizards Stage 0 Assessment
+Created for Frontend Wizards Stage 1a Assessment
 
 ## License
 
@@ -211,29 +430,7 @@ Open source - feel free to use as reference or starting point
 
 ---
 
-## Submission Checklist
+**Live Demo:** [Your GitHub Pages URL]
+**GitHub Repo:** [Your GitHub Repository URL]
 
-Before submitting, verify:
-
-- [ ] All data-testid attributes are present and correct
-- [ ] Checkbox toggle works (click → strikethrough → status change)
-- [ ] Time remaining shows a reasonable value
-- [ ] Edit button logs to console
-- [ ] Delete button shows alert
-- [ ] Card is responsive (test at 320px, 768px, 1200px)
-- [ ] No console errors
-- [ ] All buttons are keyboard focusable
-- [ ] Focus rings are visible
-- [ ] Color contrast is good
-- [ ] Code is clean and commented
-- [ ] README is included in repo
-
-## Quick Start
-
-1. Open `index.html` in a web browser
-2. Interact with the card (checkbox, buttons)
-3. Watch the time remaining update every minute
-4. Test on different screen sizes
-5. Check browser console (F12) for "Edit clicked" message
-
-Enjoy! ✨
+Enjoy the advanced todo card! ✨
